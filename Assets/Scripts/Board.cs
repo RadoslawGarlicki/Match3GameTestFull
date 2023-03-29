@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Board : MonoBehaviour
+{
+    public int width;                   //szerokoœæ planszy
+    public int height;                  //wysokoœæ planszy
+    public GameObject tilePrefab;       //prefab dla pojedynczego kafelka na planszy
+    private BackgroundTile[,] allTiles; //dwuwymiarowa tablica przechowuj¹ca wszystkie kafelki
+
+    //metoda startuj¹ca sktypt
+    void Start()
+    {
+
+       allTiles = new BackgroundTile[width, height];
+        SetUp();
+    }
+
+    //metoda ustawiaj¹ca planszê na pocz¹tku gry
+    private void SetUp()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for(int j = 0; j < height; i++)
+            {
+                Vector2 tempPostion = new Vector2(i, j);
+                GameObject backgroundTile = Instantiate(tilePrefab, tempPostion, Quaternion.identity) as GameObject;
+                backgroundTile.transform.parent = this.transform;    //zrobiemie z kafelków dzieci w stosunku do board'a
+                backgroundTile.name = "( " + i + "," + j + " )";    //nazwanie obiektów
+            }
+        }
+    }
+}
