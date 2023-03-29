@@ -22,7 +22,7 @@ public class Board : MonoBehaviour
     {
         for (int i = 0; i < width; i++)
         {
-            for(int j = 0; j < height; i++)
+            for(int j = 0; j < height; j++)
             {
                 Vector2 tempPostion = new Vector2(i, j);
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPostion, Quaternion.identity) as GameObject;
