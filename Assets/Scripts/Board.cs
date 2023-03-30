@@ -7,13 +7,16 @@ public class Board : MonoBehaviour
     public int width;                   //szerokoœæ planszy
     public int height;                  //wysokoœæ planszy
     public GameObject tilePrefab;       //prefab dla pojedynczego kafelka na planszy
+    public GameObject[] dots;
     private BackgroundTile[,] allTiles; //dwuwymiarowa tablica przechowuj¹ca wszystkie kafelki
+    public GameObject[,] allDots;       //dwuwymiarowa tablica przechowuj¹ca wszystkie kropki
 
     //metoda startuj¹ca sktypt
     void Start()
     {
 
        allTiles = new BackgroundTile[width, height];
+        allDots = new GameObject[width, height];
         SetUp();
     }
 
@@ -28,6 +31,11 @@ public class Board : MonoBehaviour
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPostion, Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;    //zrobiemie z kafelków dzieci w stosunku do board'a
                 backgroundTile.name = "( " + i + "," + j + " )";    //nazwanie obiektów
+                int dotToUse = Random.Range(0, dots.Length);
+                GameObject dot = Instantiate(dots[dotToUse], tempPostion, Quaternion.identity);
+                dot.transform.parent = this.transform;
+                dot.name = "( " + i + "," + j + " )";
+                allDots[i,j] = dot;
             }
         }
     }
