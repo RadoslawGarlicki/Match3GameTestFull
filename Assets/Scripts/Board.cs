@@ -27,12 +27,12 @@ public class Board : MonoBehaviour
         {
             for(int j = 0; j < height; j++)
             {
-                Vector2 tempPostion = new Vector2(i, j);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPostion, Quaternion.identity) as GameObject;
+                Vector2 tempPosition = new Vector2(i, j);
+                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;    //zrobiemie z kafelków dzieci w stosunku do board'a
                 backgroundTile.name = "( " + i + "," + j + " )";    //nazwanie obiektów
                 int dotToUse = Random.Range(0, dots.Length);
-                GameObject dot = Instantiate(dots[dotToUse], tempPostion, Quaternion.identity);
+                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                 dot.transform.parent = this.transform;
                 dot.name = "( " + i + "," + j + " )";
                 allDots[i,j] = dot;

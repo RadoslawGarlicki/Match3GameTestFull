@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3630332295921816064}
   - component: {fileID: 7239763854532016111}
   - component: {fileID: -8425892581206584031}
+  - component: {fileID: -6889367105771538204}
   m_Layer: 0
   m_Name: Purple Dot
   m_TagString: Untagged
@@ -101,3 +102,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &-6889367105771538204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2263915419454742951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12697d3439e19d499f2cbcf0049f94e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  column: 0
+  row: 0
+  targetX: 0
+  targetY: 0
+  swiapeAngle: 0

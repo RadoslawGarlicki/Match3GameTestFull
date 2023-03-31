@@ -8,43 +8,93 @@ public class Dot : MonoBehaviour
     public int row;
     public int targetX;
     public int targetY;
+    private Board board;
     private GameObject otherDot;
-    private Vector2 firstTouchPostion;
-    private Vector2 finalTouchPostion;
+    private Vector2 firstTouchPosition;
+    private Vector2 finalTouchPosition;
+    private Vector2 tempPosition;
     public float swiapeAngle = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        board = FindObiejctOfType<Board>;
+        board = FindObjectOfType<Board>();
+        targetX = (int)transform.position.x;
+        targetY = (int)transform.position.y;
+        row = targetX;
+        column = targetY;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        targetX = column;
+        targetY = row;
+        if(Mathf.Abs(targetX - transform.position.x) > .1)
+        { //Move Towards the targettempPosition
+            tempPosition = new Vector2(targetX, transform.position.y);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+        }else
+        {//Directly set the point
+            tempPosition = new Vector2(targetX, transform.position.y);
+            transform.position = tempPosition;
+            board.allDots[column, row] = this.gameObject;
+        }
+        if (Mathf.Abs(targetY - transform.position.y) > .1)
+        { //Move Towards the target
+            tempPosition = new Vector2(transform.position.x, targetY);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+        }
+        else
+        {//Directly set the point
+            tempPosition = new Vector2(transform.position.x, targetY);
+            transform.position = tempPosition;
+            board.allDots[column, row] = this.gameObject;
+        }
     }
     private void OnMouseDown()
     {
-        firstTouchPostion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log(firstTouchPostion);
+        firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log(firstTouchposition);
     }
     private void OnMouseUp()
     {
-        firstTouchPostion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CalculateAngle();
     }
     void CalculateAngle()
     {
-        swiapeAngle = Mathf.Atan2(finalTouchPostion.y - firstTouchPostion.y, finalTouchPostion.x - firstTouchPostion.x) * 100 / Mathf.PI;
-        //Debug.Log(swiapeAngle);
+        swiapeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+        Debug.Log(swiapeAngle);
+        MovePieces();
     }
     void MovePieces()       //przesuwanie kropek
     {
-        if(swiapeAngle > -45 && swiapeAngle <=45)
+        if(swiapeAngle > -45 && swiapeAngle <= 45 && column < board.width)
         {
+            //Right Swipe
             otherDot = board.allDots[column + 1, row];
-            otherDot.GetComponent<Dot>
+            otherDot.GetComponent<Dot>().column -= 1;
+            column += 1;    
+        } else if (swiapeAngle > 45 && swiapeAngle <= 135 && row < board.height)
+        {
+            //Up Swipe
+            otherDot = board.allDots[column, row + 1];
+            otherDot.GetComponent<Dot>().column -= 1;
+            row += 1;
+        } else if ((swiapeAngle > 135 || swiapeAngle <= -135) && column > 0)
+        {
+            //Left Swipe
+            otherDot = board.allDots[column - 1, row];
+            otherDot.GetComponent<Dot>().column += 1;
+            column -= 1;
+        } else if (swiapeAngle > -45 && swiapeAngle >= -135 && row > 0)
+        {
+            //Down Swipe
+            otherDot = board.allDots[column, row -1];
+            otherDot.GetComponent<Dot>().column += 1;
+            column -= 1;
         }
     }
 }
