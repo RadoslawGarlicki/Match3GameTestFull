@@ -23,9 +23,9 @@ public class Board : MonoBehaviour
     //metoda ustawiaj¹ca planszê na pocz¹tku gry
     private void SetUp()
     {
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < height; i++)
         {
-            for(int j = 0; j < height; j++)
+            for(int j = 0; j < width; j++)
             {
                 Vector2 tempPosition = new Vector2(i, j);
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
@@ -35,7 +35,7 @@ public class Board : MonoBehaviour
                 GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                 dot.transform.parent = this.transform;
                 dot.name = "( " + i + "," + j + " )";
-                allDots[i,j] = dot;
+                allDots[j,i] = dot;
             }
         }
     }

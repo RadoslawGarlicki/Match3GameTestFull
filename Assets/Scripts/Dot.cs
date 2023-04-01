@@ -32,7 +32,7 @@ public class Dot : MonoBehaviour
         targetX = column;
         targetY = row;
         if(Mathf.Abs(targetX - transform.position.x) > .1)
-        { //Move Towards the targettempPosition
+        { //Move Towards the target 
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
         }else
@@ -50,7 +50,7 @@ public class Dot : MonoBehaviour
         {//Directly set the point
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
+           board.allDots[column, row] = this.gameObject;
         }
     }
     private void OnMouseDown()
@@ -66,7 +66,7 @@ public class Dot : MonoBehaviour
     void CalculateAngle()
     {
         swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-        Debug.Log(swipeAngle);
+        //Debug.Log(swipeAngle);
         MovePieces();
     }
     void MovePieces()       //przesuwanie kropek
