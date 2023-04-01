@@ -13,7 +13,7 @@ public class Dot : MonoBehaviour
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
-    public float swiapeAngle = 0;
+    public float swipeAngle = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -65,36 +65,39 @@ public class Dot : MonoBehaviour
     }
     void CalculateAngle()
     {
-        swiapeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-        Debug.Log(swiapeAngle);
+        swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+        Debug.Log(swipeAngle);
         MovePieces();
     }
     void MovePieces()       //przesuwanie kropek
     {
-        if(swiapeAngle > -45 && swiapeAngle <= 45 && column < board.width)
+        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width)
         {
             //Right Swipe
             otherDot = board.allDots[column + 1, row];
             otherDot.GetComponent<Dot>().column -= 1;
-            column += 1;    
-        } else if (swiapeAngle > 45 && swiapeAngle <= 135 && row < board.height)
+            column += 1;
+            
+        } else if (swipeAngle > 45 && swipeAngle <= 135 && row < board.height)
         {
             //Up Swipe
             otherDot = board.allDots[column, row + 1];
-            otherDot.GetComponent<Dot>().column -= 1;
+            otherDot.GetComponent<Dot>().row -= 1;
             row += 1;
-        } else if ((swiapeAngle > 135 || swiapeAngle <= -135) && column > 0)
+
+        } else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
             //Left Swipe
             otherDot = board.allDots[column - 1, row];
             otherDot.GetComponent<Dot>().column += 1;
             column -= 1;
-        } else if (swiapeAngle > -45 && swiapeAngle >= -135 && row > 0)
+
+        } else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
             //Down Swipe
             otherDot = board.allDots[column, row -1];
-            otherDot.GetComponent<Dot>().column += 1;
-            column -= 1;
+            otherDot.GetComponent<Dot>().row += 1;
+            row -= 1;
         }
     }
 }

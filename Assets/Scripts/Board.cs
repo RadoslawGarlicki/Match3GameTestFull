@@ -15,7 +15,7 @@ public class Board : MonoBehaviour
     void Start()
     {
 
-       allTiles = new BackgroundTile[width, height];
+        allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
         SetUp();
     }
@@ -29,8 +29,8 @@ public class Board : MonoBehaviour
             {
                 Vector2 tempPosition = new Vector2(i, j);
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform;    //zrobiemie z kafelków dzieci w stosunku do board'a
-                backgroundTile.name = "( " + i + "," + j + " )";    //nazwanie obiektów
+                backgroundTile.transform.parent = this.transform; 
+                backgroundTile.name = "( " + i + "," + j + " )";    
                 int dotToUse = Random.Range(0, dots.Length);
                 GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                 dot.transform.parent = this.transform;
