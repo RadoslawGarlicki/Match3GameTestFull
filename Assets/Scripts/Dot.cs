@@ -12,12 +12,14 @@ public class Dot : MonoBehaviour
     public int targetX;
     public int targetY;
     public bool isMatched = false;
+
     private Board board;
     private GameObject otherDot;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
     public float swipeAngle = 0;
+    public float swipeResist = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -95,9 +97,12 @@ public class Dot : MonoBehaviour
     }
     void CalculateAngle()
     {
-        swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-        //Debug.Log(swipeAngle);
-        MovePieces();
+        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist || Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist)
+        {
+            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+            //Debug.Log(swipeAngle);
+            MovePieces();
+        }
     }
     void MovePieces()       //przesuwanie kropek
     {
