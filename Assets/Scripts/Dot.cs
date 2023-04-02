@@ -31,7 +31,6 @@ public class Dot : MonoBehaviour
         column = targetY;
         previousColumn = column;
         previousRow = row;
-
     }
 
     // Update is called once per frame

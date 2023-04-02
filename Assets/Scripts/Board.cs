@@ -7,14 +7,14 @@ public class Board : MonoBehaviour
     public int width;                   //szerokoœæ planszy
     public int height;                  //wysokoœæ planszy
     public GameObject tilePrefab;       //prefab dla pojedynczego kafelka na planszy
-    public GameObject[] dots;
+    public GameObject[] dots;          
     private BackgroundTile[,] allTiles; //dwuwymiarowa tablica przechowuj¹ca wszystkie kafelki
     public GameObject[,] allDots;       //dwuwymiarowa tablica przechowuj¹ca wszystkie kropki
 
     //metoda startuj¹ca sktypt
     void Start()
     {
-
+        //Inicializacja dwuwymiarowych tablic przechowywuj¹cych kafelki i kropki
         allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
         SetUp();
@@ -27,61 +27,61 @@ public class Board : MonoBehaviour
         {
             for(int j = 0; j < width; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform; 
-                backgroundTile.name = "( " + i + "," + j + " )";   
+                Vector2 tempPosition = new Vector2(i, j);                                                                   //Ustawienie pozycji dla ka¿dego kafelka na planszy
+                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;       //Stworzenie obiektu kafelka na planszy
+                backgroundTile.transform.parent = this.transform;                                                           //Ustawienie kafelka jako dziecka board'a
+                backgroundTile.name = "( " + i + "," + j + " )";                                
                 int dotToUse = Random.Range(0, dots.Length);
 
                 int maxIteration = 0;
-                while ((MatchesAt(i,j, dots[dotToUse]) && maxIteration < 100))
+                while ((MatchesAt(i,j, dots[dotToUse]) && maxIteration < 100))                  //Warunek który upewnia siê czy nie ma 3 kropek tege samego typu obok siebie 
                 {
                     dotToUse = Random.Range(0, dots.Length);
                     maxIteration++;
                     Debug.Log(maxIteration);
                 }
                 maxIteration = 0;
-                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
-                dot.transform.parent = this.transform;
+                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);        //stworzenie kropki na planszy
+                dot.transform.parent = this.transform;                                                  //kropa jako dziecko board'a
                 dot.name = "( " + i + "," + j + " )";
-                allDots[j,i] = dot;
+                allDots[j,i] = dot;                                                                 //przypisane kropki do odpowiedniego miejsca w dwuwymiarowej tablicy allDots
             }
         }
     }
 
-    private bool MatchesAt(int row, int column, GameObject piece)
+    private bool MatchesAt(int row, int column, GameObject piece)                           //Metoda sprawdzaj¹ca czy s¹ wygenerowane 3 kropki ko³o siebie w kolumnie lub rzêdzie
     {
-        if(column > 1 && row > 1)
+        if(column > 1 && row > 1)               //Jeœli nie ma ich w dwóch pierwszych
         {
-            if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
+            if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)         //Sprawdza czy znajduj¹ siê w jednym rzêdzie
             { 
                 return true; 
             }
 
-            if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
+            if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)         //... kolumnie
             {
                 return true;
             }
 
         }
-        else if(column <= 1 || row <= 1)
+        else if(column <= 1 || row <= 1)            //Jeœli znajdujê siê w dwóch pierwszych
         {
             if(row > 1)
             {
-                if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)
+                if (allDots[column, row - 1].tag == piece.tag && allDots[column, row - 2].tag == piece.tag)         //sprawdza czy znajduj¹ siê w jednym rzêdzie
                 {
                     return true;
                 }
             }
             if (column > 1)
             {
-                if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)
+                if (allDots[column - 1, row].tag == piece.tag && allDots[column - 2, row].tag == piece.tag)         // kolumnie
                 {
                     return true;
                 }
             }
         }
 
-        return false;
+        return false;                       //Je¿eli brak kropek
     }
 }
